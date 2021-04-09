@@ -1,28 +1,30 @@
-let room: {
-  width: number;
-  height: number;
-};
+import prompt from 'prompt';
 
-let position: {
-  x: number;
-  y: number;
-  direction: string;
-};
+// let room: {
+//     width: number;
+//     height: number;
+// };
 
-const setPosition = (x: number, y: number, direction: string): void => {
-  position = {
-    x: x,
-    y: y,
-    direction: direction,
-  };
-};
+// let position: {
+//     x: number;
+//     y: number;
+//     direction: string;
+// };
 
-const setRoom = (width: number, height: number): void => {
-  room = {
-    width: width,
-    height: height,
-  };
-};
+// const setPosition = (x: number, y: number, direction: string): void => {
+//     position = {
+//         x: x,
+//         y: y,
+//         direction: direction,
+//     };
+// };
+
+// const setRoom = (width: number, height: number): void => {
+//     room = {
+//         width: width,
+//         height: height,
+//     };
+// };
 
 // const leftTurn = (): void => {
 
@@ -36,17 +38,27 @@ const setRoom = (width: number, height: number): void => {
 
 // }
 
-const run = (
-  width: number,
-  height: number,
-  x: number,
-  y: number,
-  direction: string,
-) => {
-  setPosition(x, y, direction);
-  setRoom(width, height);
+const props = [
+  {
+    name: 'room',
+    validator: /^\d+$/,
+    warning: 'Room size can only be numbers',
+  },
+];
 
-  console.log(position, room);
+const io = (): void => {
+  prompt.start();
+  prompt.get(props, (err: Error, res: any) => {
+    if (err) throw err;
+    console.log(res.room);
+  });
 };
 
-run(10, 10, 10, 10, 'C');
+io();
+
+// const run = (): void => {
+//   setPosition(x, y, direction);
+//   setRoom(width, height);
+
+//   console.log(position, room);
+// };

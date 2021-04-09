@@ -37,5 +37,8 @@
     "*.{ts,tsx}": [
       "eslint --fix"
     ]
+  },
+  "dependencies": {
+    "prompt": "^1.1.0"
   }
 }
