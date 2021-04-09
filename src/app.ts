@@ -1,4 +1,4 @@
-import prompt from 'prompt';
+import prompts from 'prompts';
 
 // let room: {
 //     width: number;
@@ -38,20 +38,19 @@ import prompt from 'prompt';
 
 // }
 
-const props = [
-  {
-    name: 'room',
-    validator: /^\d+$/,
-    warning: 'Room size can only be numbers',
-  },
-];
-
-const io = (): void => {
-  prompt.start();
-  prompt.get(props, (err: Error, result: prompt.Properties): void => {
-    if (err) throw err;
-    console.log(result.room);
+const io = async () => {
+  const response = await prompts({
+    type: 'text',
+    name: 'roomSize',
+    message:
+      'Please specify the size of the room in the following format: width height, for example 10 4',
+    validate: (input: any) =>
+      input.split(' ').length === 2 &&
+      !isNaN(input.split(' ')[0]) &&
+      !isNaN(input.split(' ')[1]),
   });
+
+  console.log(response);
 };
 
 io();
