@@ -43,4 +43,4 @@ const run = (width: number, height: number, x: number, y: number, direction: str
     console.log(position, room);
 };
 
-run(10, 10, 10, 10, 'A');
+run(10, 10, 10, 10, 'B');
