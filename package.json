@@ -1,0 +1,19 @@
+{
+  "name": "jaywaycase",
+  "version": "1.0.0",
+  "description": "Case for job at Jayway (robot controller)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tselmegbaasan/JaywayCase.git"
+  },
+  "author": "Tselmeg Baasan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tselmegbaasan/JaywayCase/issues"
+  },
+  "homepage": "https://github.com/tselmegbaasan/JaywayCase#readme"
+}
