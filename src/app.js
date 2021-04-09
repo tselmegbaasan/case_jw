@@ -42,13 +42,23 @@ const prompts_1 = __importDefault(require("prompts"));
 // const walkForward = (): void => {
 // }
 const io = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield prompts_1.default({
+    const roomSize = yield prompts_1.default({
         type: 'text',
         name: 'roomSize',
-        message: 'Please specify the size of the room in the following format: width height, for example 10 4',
-        validate: (input) => input.split(" ").length === 2 && !isNaN(input.split(" ")[0]) && !isNaN(input.split(" ")[1])
+        message: 'Please enter the size of the room in the following format: width height, for example 10 4',
+        validate: (input) => input.split(' ').length === 2 &&
+            !isNaN(input.split(' ')[0]) &&
+            !isNaN(input.split(' ')[1]),
     });
-    console.log(response);
+    const currentPosition = yield prompts_1.default({
+        type: 'text',
+        name: 'currentPosition',
+        message: 'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
+        validate: (input) => input.split(" ").length === 3 &&
+            !isNaN(input.split(" ")[0]) &&
+            !isNaN(input.split(" ")[1]) &&
+            typeof input.split(" ")[2] === 'string' && isNaN(input.split(" ")[2])
+    });
 });
 io();
 // const run = (): void => {
