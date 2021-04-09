@@ -48,9 +48,9 @@ const props = [
 
 const io = (): void => {
   prompt.start();
-  prompt.get(props, (err: Error, res: any) => {
+  prompt.get(props, (err: Error, result: prompt.Properties): void => {
     if (err) throw err;
-    console.log(res.room);
+    console.log(result.room);
   });
 };
 
