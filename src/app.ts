@@ -26,17 +26,17 @@ const setRoom = (width: number, height: number): void => {
   };
 };
 
-// const leftTurn = (): void => {
+const turnLeft = (): void => {
+  console.log('turning left');
+};
 
-// }
+const turnRight = (): void => {
+  console.log('turning right');
+};
 
-// const rightTurn = (): void => {
-
-// }
-
-// const walkForward = (): void => {
-
-// }
+const walkForward = (): void => {
+  console.log('walking forward');
+};
 
 const includesForbiddenCharacters = (forbiddenChars: string[], str: string) => {
   return forbiddenChars.some((char: string) => str.includes(char));
@@ -86,6 +86,12 @@ const io = async () => {
   return input;
 };
 
+const directionsMapping: { [key: string]: () => void } = {
+  L: turnLeft,
+  R: turnRight,
+  F: walkForward,
+};
+
 const run = async () => {
   const input = await io();
 
@@ -100,9 +106,12 @@ const run = async () => {
   const positionArgs: string[] = positionInput.split(' ');
   const xPosition: number = +positionArgs[0];
   const yPosition: number = +positionArgs[1];
-  const direction: string = positionArgs[2].toUpperCase();
+  const direction: string = positionArgs[2];
 
   setPosition(xPosition, yPosition, direction);
+
+  const directionsInput: string[] = input.directions.split('');
+  directionsInput.forEach((direction) => directionsMapping[direction]());
 
   console.log(room, position);
 };

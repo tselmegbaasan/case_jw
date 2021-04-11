@@ -28,12 +28,15 @@ const setRoom = (width, height) => {
         height: height,
     };
 };
-// const leftTurn = (): void => {
-// }
-// const rightTurn = (): void => {
-// }
-// const walkForward = (): void => {
-// }
+const turnLeft = () => {
+    console.log('turning left');
+};
+const turnRight = () => {
+    console.log('turning right');
+};
+const walkForward = () => {
+    console.log('walking forward');
+};
 const includesForbiddenCharacters = (forbiddenChars, str) => {
     return forbiddenChars.some((char) => str.includes(char));
 };
@@ -63,11 +66,16 @@ const io = () => __awaiter(void 0, void 0, void 0, function* () {
             type: 'text',
             name: 'directions',
             message: 'Please enter your directions to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
-            validate: (input) => !includesForbiddenCharacters('ABCDEGHIJKMNOPQSTUVWXYZ'.split(''), input),
-        }
+            validate: (input) => !includesForbiddenCharacters('ABCDEGHIJKMNOPQSTUVWXYZ'.split(''), input) && input.toUpperCase() === input,
+        },
     ]);
     return input;
 });
+const directionsMapping = {
+    L: turnLeft,
+    R: turnRight,
+    F: walkForward
+};
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield io();
     const roomInput = input.roomSize;
@@ -79,8 +87,10 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const positionArgs = positionInput.split(' ');
     const xPosition = +positionArgs[0];
     const yPosition = +positionArgs[1];
-    const direction = positionArgs[2].toUpperCase();
+    const direction = positionArgs[2];
     setPosition(xPosition, yPosition, direction);
+    const directionsInput = input.directions.split('');
+    directionsInput.forEach(direction => directionsMapping[direction]());
     console.log(room, position);
 });
 run();
