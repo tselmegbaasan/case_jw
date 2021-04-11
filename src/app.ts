@@ -1,114 +1,111 @@
 import prompts from 'prompts';
 import { io } from './utils';
 
-let room: {
-  width: number;
-  height: number;
-};
-
-let position: {
-  x: number;
-  y: number;
-  direction: string;
-};
-
-const setPosition = (x: number, y: number, direction: string): void => {
-  position = {
-    x: x,
-    y: y,
-    direction: direction,
+export class Room {
+  size: {
+    width: number;
+    height: number;
   };
-};
 
-const setRoom = (width: number, height: number): void => {
-  room = {
-    width: width,
-    height: height,
+  constructor(size: { width: number; height: number }) {
+    this.size = size;
+  }
+}
+
+export class Robot {
+  position: {
+    x: number;
+    y: number;
+    direction: string;
   };
-};
 
-const turnLeft = (): void => {
-  let newDirection = '';
-  switch (position.direction) {
-    case 'N':
-      newDirection = 'W';
-      break;
-    case 'E':
-      newDirection = 'N';
-      break;
-    case 'S':
-      newDirection = 'E';
-      break;
-    case 'W':
-      newDirection = 'S';
-      break;
-    default:
-      break;
+  location: Room;
+
+  constructor(
+    position: { x: number; y: number; direction: string },
+    location: Room,
+  ) {
+    this.position = position;
+    this.location = location;
   }
 
-  position = {
-    ...position,
-    direction: newDirection,
+  turnLeft = (): void => {
+    let newDirection = '';
+    switch (this.position.direction) {
+      case 'N':
+        newDirection = 'W';
+        break;
+      case 'E':
+        newDirection = 'N';
+        break;
+      case 'S':
+        newDirection = 'E';
+        break;
+      case 'W':
+        newDirection = 'S';
+        break;
+      default:
+        break;
+    }
+
+    this.position = {
+      ...this.position,
+      direction: newDirection,
+    };
   };
-};
 
-const turnRight = (): void => {
-  let newDirection = '';
-  switch (position.direction) {
-    case 'N':
-      newDirection = 'E';
-      break;
-    case 'E':
-      newDirection = 'S';
-      break;
-    case 'S':
-      newDirection = 'W';
-      break;
-    case 'W':
-      newDirection = 'N';
-      break;
-    default:
-      break;
-  }
+  turnRight = (): void => {
+    let newDirection = '';
+    switch (this.position.direction) {
+      case 'N':
+        newDirection = 'E';
+        break;
+      case 'E':
+        newDirection = 'S';
+        break;
+      case 'S':
+        newDirection = 'W';
+        break;
+      case 'W':
+        newDirection = 'N';
+        break;
+      default:
+        break;
+    }
 
-  position = {
-    ...position,
-    direction: newDirection,
+    this.position = {
+      ...this.position,
+      direction: newDirection,
+    };
   };
-};
 
-const walkForward = (): void => {
-  let currentX: number = position.x;
-  let currentY: number = position.y;
-  switch (position.direction) {
-    case 'N':
-      currentY >= 1 && currentY--;
-      break;
-    case 'E':
-      currentX < room.width && currentX++;
-      break;
-    case 'S':
-      currentY < room.height && currentY++;
-      break;
-    case 'W':
-      currentX >= 1 && currentX--;
-      break;
-    default:
-      break;
-  }
+  walkForward = (): void => {
+    let currentX: number = this.position.x;
+    let currentY: number = this.position.y;
+    switch (this.position.direction) {
+      case 'N':
+        currentY >= 1 && currentY--;
+        break;
+      case 'E':
+        currentX < this.location.size.width && currentX++;
+        break;
+      case 'S':
+        currentY < this.location.size.height && currentY++;
+        break;
+      case 'W':
+        currentX >= 1 && currentX--;
+        break;
+      default:
+        break;
+    }
 
-  position = {
-    ...position,
-    x: currentX,
-    y: currentY,
+    this.position = {
+      ...this.position,
+      x: currentX,
+      y: currentY,
+    };
   };
-};
-
-const directionsMapping: { [key: string]: () => void } = {
-  L: turnLeft,
-  R: turnRight,
-  F: walkForward,
-};
+}
 
 const run = async () => {
   const input: prompts.Answers<
@@ -120,7 +117,7 @@ const run = async () => {
   const roomWidth: number = +roomSize[0];
   const roomHeight: number = +roomSize[1];
 
-  setRoom(roomWidth, roomHeight);
+  const room = new Room({ width: roomWidth, height: roomHeight });
 
   const positionInput: string = input.currentPosition;
   const positionArgs: string[] = positionInput.split(' ');
@@ -128,12 +125,23 @@ const run = async () => {
   const yPosition: number = +positionArgs[1];
   const direction: string = positionArgs[2];
 
-  setPosition(xPosition, yPosition, direction);
+  const robot = new Robot(
+    { x: xPosition, y: yPosition, direction: direction },
+    room,
+  );
+
+  const commandoMapping: { [key: string]: () => void } = {
+    L: robot.turnLeft,
+    R: robot.turnRight,
+    F: robot.walkForward,
+  };
 
   const directionsInput: string[] = input.directions.split('');
-  directionsInput.forEach((direction) => directionsMapping[direction]());
+  directionsInput.forEach((direction) => commandoMapping[direction]());
 
-  console.log(`Report: ${position.x} ${position.y} ${position.direction}`);
+  console.log(
+    `Report: ${robot.position.x} ${robot.position.y} ${robot.position.direction}`,
+  );
 };
 
 run();
