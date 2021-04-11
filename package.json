@@ -2,9 +2,9 @@
   "name": "jaywaycase",
   "version": "1.0.0",
   "description": "Case for job at Jayway (robot controller)",
-  "main": "src/app.js",
+  "main": "src/js/app.js",
   "scripts": {
-    "start": "tsc && node src/app.js",
+    "start": "tsc && node src/js/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
