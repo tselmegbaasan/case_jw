@@ -47,14 +47,14 @@ export const io = async (): Promise<
       name: 'roomSize',
       message:
         'Please enter the size of the room in the following format: width height, for example 10 4',
-      validate: (input) => validateRoomSize(input),
+      validate: (input: string) => validateRoomSize(input),
     },
     {
       type: 'text',
       name: 'currentPosition',
       message:
         'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
-      validate: (input) => validateCurrentPosition(input),
+      validate: (input: string) => validateCurrentPosition(input),
     },
     {
       type: 'text',
