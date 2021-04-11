@@ -1,7 +1,7 @@
 import prompts from 'prompts';
 
-const includesForbiddenCharacters = (forbiddenChars: string[], str: string) => {
-  return forbiddenChars.some((char: string) => str.includes(char));
+const isAcceptedCharacter = (acceptedCharacters: string[], str: string) => {
+  return acceptedCharacters.some((char: string) => str.includes(char));
 };
 
 const validateRoomSize = (str: string): boolean => {
@@ -21,20 +21,23 @@ const validateCurrentPosition = (str: string): boolean => {
   const yPositionStr: string = splitStr[1];
   const directionStr: string = splitStr[2];
 
-  const forbiddenCharacters: string[] = 'ABCDFGHIJKLMOPQRTUVXYZ'.split('');
+  const acceptedCharacters: string[] = ['N', 'E', 'S', 'W'];
   return (
     !isNaN(xPositionStr as any) &&
     !isNaN(yPositionStr as any) &&
-    !includesForbiddenCharacters(forbiddenCharacters, directionStr) &&
+    isAcceptedCharacter(acceptedCharacters, directionStr) &&
     isUpperCase(directionStr)
   );
 };
 
 const validateDirections = (str: string): boolean => {
-  const forbiddenCharacters: string[] = 'ABCDEGHIJKMNOPQSTUVWXYZ'.split('');
+  const acceptedCharacters: string[] = ['R', 'L', 'F'];
 
   return (
-    !includesForbiddenCharacters(forbiddenCharacters, str) && isUpperCase(str)
+    str
+      .split('')
+      .some((char: string) => isAcceptedCharacter(acceptedCharacters, char)) &&
+    isUpperCase(str)
   );
 };
 

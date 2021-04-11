@@ -1,20 +1,13 @@
 import Room from './room';
+import Position from './position';
 
 export default class Robot {
-  position: {
-    x: number;
-    y: number;
-    direction: string;
-  };
+  position: Position;
+  room: Room;
 
-  location: Room;
-
-  constructor(
-    position: { x: number; y: number; direction: string },
-    location: Room,
-  ) {
+  constructor(position: Position, room: Room) {
     this.position = position;
-    this.location = location;
+    this.room = room;
   }
 
   turnLeft = (): void => {
@@ -75,10 +68,10 @@ export default class Robot {
         currentY >= 1 && currentY--;
         break;
       case 'E':
-        currentX < this.location.size.width && currentX++;
+        currentX < this.room.width && currentX++;
         break;
       case 'S':
-        currentY < this.location.size.height && currentY++;
+        currentY < this.room.height && currentY++;
         break;
       case 'W':
         currentX >= 1 && currentX--;

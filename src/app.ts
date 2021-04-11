@@ -2,29 +2,17 @@ import prompts from 'prompts';
 import { io } from './utils';
 import Room from './room';
 import Robot from './robot';
+import Position from './position';
 
 async () => {
   const input: prompts.Answers<
     'roomSize' | 'currentPosition' | 'directions'
   > = await io();
 
-  const roomInput: string = input.roomSize;
-  const roomSize: string[] = roomInput.split(' ');
-  const roomWidth: number = +roomSize[0];
-  const roomHeight: number = +roomSize[1];
+  const room = createRoom(input.roomSize);
+  const positon = createPosition(input.currentPosition);
 
-  const room = new Room({ width: roomWidth, height: roomHeight });
-
-  const positionInput: string = input.currentPosition;
-  const positionArgs: string[] = positionInput.split(' ');
-  const xPosition: number = +positionArgs[0];
-  const yPosition: number = +positionArgs[1];
-  const direction: string = positionArgs[2];
-
-  const robot = new Robot(
-    { x: xPosition, y: yPosition, direction: direction },
-    room,
-  );
+  const robot = new Robot(positon, room);
 
   const commandoMapping: { [key: string]: () => void } = {
     L: robot.turnLeft,
@@ -33,9 +21,28 @@ async () => {
   };
 
   const directionsInput: string[] = input.directions.split('');
-  directionsInput.forEach((direction) => commandoMapping[direction]());
+  directionsInput.forEach((commando) => commandoMapping[commando]());
 
   console.log(
     `Report: ${robot.position.x} ${robot.position.y} ${robot.position.direction}`,
   );
+};
+
+const createRoom = (str: string): Room => {
+  const roomSize: string[] = str.split(' ');
+  const roomWidth: number = +roomSize[0];
+  const roomHeight: number = +roomSize[1];
+  return {
+    width: roomWidth,
+    height: roomHeight,
+  };
+};
+
+const createPosition = (str: string): Position => {
+  const positionArgs: string[] = str.split(' ');
+  return {
+    x: +positionArgs[0],
+    y: +positionArgs[1],
+    direction: positionArgs[2],
+  };
 };
