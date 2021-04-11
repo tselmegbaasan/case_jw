@@ -39,36 +39,36 @@ import prompts from 'prompts';
 // }
 
 const io = async () => {
-  const roomSize = await prompts({
-    type: 'text',
-    name: 'roomSize',
-    message:
-      'Please enter the size of the room in the following format: width height, for example 10 4',
-    validate: (input) =>
-      input.split(' ').length === 2 &&
-      !isNaN(input.split(' ')[0]) &&
-      !isNaN(input.split(' ')[1]),
-  });
-
-  const currentPosition = await prompts({
-    type: 'text',
-    name: 'currentPosition',
-    message:
-      'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
-    validate: (input) =>
-      input.split(' ').length === 3 &&
-      !isNaN(input.split(' ')[0]) &&
-      !isNaN(input.split(' ')[1]) &&
-      typeof input.split(' ')[2] === 'string' &&
-      isNaN(input.split(' ')[2]),
-  });
+  const input = await prompts([
+    {
+      type: 'text',
+      name: 'roomSize',
+      message:
+        'Please enter the size of the room in the following format: width height, for example 10 4',
+      validate: (input) =>
+        input.split(' ').length === 2 &&
+        !isNaN(input.split(' ')[0]) &&
+        !isNaN(input.split(' ')[1]),
+    },
+    {
+      type: 'text',
+      name: 'currentPosition',
+      message:
+        'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
+      validate: (input) =>
+        input.split(' ').length === 3 &&
+        !isNaN(input.split(' ')[0]) &&
+        !isNaN(input.split(' ')[1]) &&
+        typeof input.split(' ')[2] === 'string' &&
+        isNaN(input.split(' ')[2]),
+    },
+  ]);
+  return input;
 };
 
-io();
+const run = async () => {
+  const input = await io();
+  console.log(input);
+};
 
-// const run = (): void => {
-//   setPosition(x, y, direction);
-//   setRoom(width, height);
-
-//   console.log(position, room);
-// };
+run();

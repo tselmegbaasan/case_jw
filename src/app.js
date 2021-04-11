@@ -42,27 +42,29 @@ const prompts_1 = __importDefault(require("prompts"));
 // const walkForward = (): void => {
 // }
 const io = () => __awaiter(void 0, void 0, void 0, function* () {
-    const roomSize = yield prompts_1.default({
-        type: 'text',
-        name: 'roomSize',
-        message: 'Please enter the size of the room in the following format: width height, for example 10 4',
-        validate: (input) => input.split(' ').length === 2 &&
-            !isNaN(input.split(' ')[0]) &&
-            !isNaN(input.split(' ')[1]),
-    });
-    const currentPosition = yield prompts_1.default({
-        type: 'text',
-        name: 'currentPosition',
-        message: 'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
-        validate: (input) => input.split(" ").length === 3 &&
-            !isNaN(input.split(" ")[0]) &&
-            !isNaN(input.split(" ")[1]) &&
-            typeof input.split(" ")[2] === 'string' && isNaN(input.split(" ")[2])
-    });
+    const input = yield prompts_1.default([{
+            type: 'text',
+            name: 'roomSize',
+            message: 'Please enter the size of the room in the following format: width height, for example 10 4',
+            validate: (input) => input.split(' ').length === 2 &&
+                !isNaN(input.split(' ')[0]) &&
+                !isNaN(input.split(' ')[1]),
+        },
+        {
+            type: 'text',
+            name: 'currentPosition',
+            message: 'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
+            validate: (input) => input.split(' ').length === 3 &&
+                !isNaN(input.split(' ')[0]) &&
+                !isNaN(input.split(' ')[1]) &&
+                typeof input.split(' ')[2] === 'string' &&
+                isNaN(input.split(' ')[2]),
+        }
+    ]);
+    return input;
 });
-io();
-// const run = (): void => {
-//   setPosition(x, y, direction);
-//   setRoom(width, height);
-//   console.log(position, room);
-// };
+const run = () => __awaiter(void 0, void 0, void 0, function* () {
+    const input = yield io();
+    console.log(input);
+});
+run();
