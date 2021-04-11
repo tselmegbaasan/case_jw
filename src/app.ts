@@ -1,3 +1,4 @@
+import prompts from 'prompts';
 import { io } from './utils';
 
 let room: {
@@ -110,7 +111,9 @@ const directionsMapping: { [key: string]: () => void } = {
 };
 
 const run = async () => {
-  const input = await io();
+  const input: prompts.Answers<
+    'roomSize' | 'currentPosition' | 'directions'
+  > = await io();
 
   const roomInput: string = input.roomSize;
   const roomSize: string[] = roomInput.split(' ');

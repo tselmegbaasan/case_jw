@@ -32,11 +32,14 @@ const validateCurrentPosition = (str) => {
     const yPositionStr = splitStr[1];
     const directionStr = splitStr[2];
     const forbiddenCharacters = 'ABCDFGHIJKLMOPQRTUVXYZ'.split('');
-    return !isNaN(xPositionStr) && !isNaN(yPositionStr) && !includesForbiddenCharacters(forbiddenCharacters, directionStr) && isUpperCase(directionStr);
+    return (!isNaN(xPositionStr) &&
+        !isNaN(yPositionStr) &&
+        !includesForbiddenCharacters(forbiddenCharacters, directionStr) &&
+        isUpperCase(directionStr));
 };
 const validateDirections = (str) => {
     const forbiddenCharacters = 'ABCDEGHIJKMNOPQSTUVWXYZ'.split('');
-    return !includesForbiddenCharacters(forbiddenCharacters, str) && isUpperCase(str);
+    return (!includesForbiddenCharacters(forbiddenCharacters, str) && isUpperCase(str));
 };
 const io = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield prompts_1.default([
