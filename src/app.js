@@ -14,30 +14,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompts_1 = __importDefault(require("prompts"));
 let room;
-// let position: {
-//     x: number;
-//     y: number;
-//     direction: string;
-// };
-// const setPosition = (x: number, y: number, direction: string): void => {
-//     position = {
-//         x: x,
-//         y: y,
-//         direction: direction,
-//     };
-// };
-// const setRoom = (width: number, height: number): void => {
-//     room = {
-//         width: width,
-//         height: height,
-//     };
-// };
+let position;
+const setPosition = (x, y, direction) => {
+    position = {
+        x: x,
+        y: y,
+        direction: direction,
+    };
+};
+const setRoom = (width, height) => {
+    room = {
+        width: width,
+        height: height,
+    };
+};
 // const leftTurn = (): void => {
 // }
 // const rightTurn = (): void => {
 // }
 // const walkForward = (): void => {
 // }
+const includesForbiddenCharacters = (forbiddenChars, str) => {
+    return forbiddenChars.some((char) => str.includes(char));
+};
 const io = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield prompts_1.default([
         {
@@ -56,21 +55,32 @@ const io = () => __awaiter(void 0, void 0, void 0, function* () {
                 !isNaN(input.split(' ')[0]) &&
                 !isNaN(input.split(' ')[1]) &&
                 typeof input.split(' ')[2] === 'string' &&
-                isNaN(input.split(' ')[2]),
+                isNaN(input.split(' ')[2]) &&
+                !includesForbiddenCharacters('ABCDFGHIJKLMOPQRTUVXYZ'.split(''), input.split(' ')[2]) &&
+                input.split(' ')[2].toUpperCase() === input.split(' ')[2],
         },
+        {
+            type: 'text',
+            name: 'directions',
+            message: 'Please enter your directions to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
+            validate: (input) => !includesForbiddenCharacters('ABCDEGHIJKMNOPQSTUVWXYZ'.split(''), input),
+        }
     ]);
     return input;
 });
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield io();
     const roomInput = input.roomSize;
-    const roomSize = roomInput.split(" ");
-    const roomWidth = roomSize[0];
-    const roomHeight = roomSize[1];
-    room = {
-        width: roomWidth,
-        height: roomHeight
-    };
-    console.log(room);
+    const roomSize = roomInput.split(' ');
+    const roomWidth = +roomSize[0];
+    const roomHeight = +roomSize[1];
+    setRoom(roomWidth, roomHeight);
+    const positionInput = input.currentPosition;
+    const positionArgs = positionInput.split(' ');
+    const xPosition = +positionArgs[0];
+    const yPosition = +positionArgs[1];
+    const direction = positionArgs[2].toUpperCase();
+    setPosition(xPosition, yPosition, direction);
+    console.log(room, position);
 });
 run();
