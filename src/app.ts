@@ -41,8 +41,6 @@ const turnLeft = (): void => {
     case 'W':
       newDirection = 'S';
       break;
-    default:
-      break;
   }
 
   position = {
@@ -65,8 +63,6 @@ const turnRight = (): void => {
       break;
     case 'W':
       newDirection = 'N';
-      break;
-    default:
       break;
   }
 
@@ -91,8 +87,6 @@ const walkForward = (): void => {
       break;
     case 'W':
       currentX >= 1 && currentX--;
-      break;
-    default:
       break;
   }
 
