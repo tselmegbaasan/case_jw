@@ -70,18 +70,19 @@ const walkForward = () => {
     let currentY = position.y;
     switch (position.direction) {
         case 'N':
-            currentY < room.height && currentY++;
+            currentY >= 1 && currentY--;
             break;
         case 'E':
             currentX < room.width && currentX++;
             break;
         case 'S':
-            currentY >= 1 && currentY--;
+            currentY < room.height && currentY++;
             break;
         case 'W':
             currentX >= 1 && currentX--;
             break;
-        default: break;
+        default:
+            break;
     }
     position = Object.assign(Object.assign({}, position), { x: currentX, y: currentY });
 };
@@ -105,6 +106,6 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     setPosition(xPosition, yPosition, direction);
     const directionsInput = input.directions.split('');
     directionsInput.forEach((direction) => directionsMapping[direction]());
-    console.log(position);
+    console.log(`Report: ${position.x} ${position.y} ${position.direction}`);
 });
 run();

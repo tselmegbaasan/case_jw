@@ -17,33 +17,46 @@ const prompts_1 = __importDefault(require("prompts"));
 const includesForbiddenCharacters = (forbiddenChars, str) => {
     return forbiddenChars.some((char) => str.includes(char));
 };
+const validateRoomSize = (str) => {
+    const splitStr = str.split(' ');
+    const roomWidth = splitStr[0];
+    const roomHeight = splitStr[1];
+    return !isNaN(roomWidth) && !isNaN(roomHeight);
+};
+const isUpperCase = (str) => {
+    return str.toUpperCase() === str;
+};
+const validateCurrentPosition = (str) => {
+    const splitStr = str.split(' ');
+    const xPositionStr = splitStr[0];
+    const yPositionStr = splitStr[1];
+    const directionStr = splitStr[2];
+    const forbiddenCharacters = 'ABCDFGHIJKLMOPQRTUVXYZ'.split('');
+    return !isNaN(xPositionStr) && !isNaN(yPositionStr) && !includesForbiddenCharacters(forbiddenCharacters, directionStr) && isUpperCase(directionStr);
+};
+const validateDirections = (str) => {
+    const forbiddenCharacters = 'ABCDEGHIJKMNOPQSTUVWXYZ'.split('');
+    return !includesForbiddenCharacters(forbiddenCharacters, str) && isUpperCase(str);
+};
 const io = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield prompts_1.default([
         {
             type: 'text',
             name: 'roomSize',
             message: 'Please enter the size of the room in the following format: width height, for example 10 4',
-            validate: (input) => input.split(' ').length === 2 &&
-                !isNaN(input.split(' ')[0]) &&
-                !isNaN(input.split(' ')[1]),
+            validate: (input) => validateRoomSize(input),
         },
         {
             type: 'text',
             name: 'currentPosition',
             message: 'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
-            validate: (input) => input.split(' ').length === 3 &&
-                !isNaN(input.split(' ')[0]) &&
-                !isNaN(input.split(' ')[1]) &&
-                typeof input.split(' ')[2] === 'string' &&
-                isNaN(input.split(' ')[2]) &&
-                !includesForbiddenCharacters('ABCDFGHIJKLMOPQRTUVXYZ'.split(''), input.split(' ')[2]) &&
-                input.split(' ')[2].toUpperCase() === input.split(' ')[2],
+            validate: (input) => validateCurrentPosition(input),
         },
         {
             type: 'text',
             name: 'directions',
             message: 'Please enter your directions to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
-            validate: (input) => !includesForbiddenCharacters('ABCDEGHIJKMNOPQSTUVWXYZ'.split(''), input) && input.toUpperCase() === input,
+            validate: (input) => validateDirections(input),
         },
     ]);
     return input;

@@ -81,13 +81,13 @@ const walkForward = (): void => {
   let currentY: number = position.y;
   switch (position.direction) {
     case 'N':
-      currentY < room.height && currentY++;
+      currentY >= 1 && currentY--;
       break;
     case 'E':
       currentX < room.width && currentX++;
       break;
     case 'S':
-      currentY >= 1 && currentY--;
+      currentY < room.height && currentY++;
       break;
     case 'W':
       currentX >= 1 && currentX--;
@@ -130,7 +130,7 @@ const run = async () => {
   const directionsInput: string[] = input.directions.split('');
   directionsInput.forEach((direction) => directionsMapping[direction]());
 
-  console.log(position);
+  console.log(`Report: ${position.x} ${position.y} ${position.direction}`);
 };
 
 run();
