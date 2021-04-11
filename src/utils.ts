@@ -4,7 +4,9 @@ const includesForbiddenCharacters = (forbiddenChars: string[], str: string) => {
   return forbiddenChars.some((char: string) => str.includes(char));
 };
 
-export const io = async () => {
+export const io = async (): Promise<
+  prompts.Answers<'roomSize' | 'currentPosition' | 'directions'>
+> => {
   const input = await prompts([
     {
       type: 'text',
