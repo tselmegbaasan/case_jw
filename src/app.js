@@ -13,10 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompts_1 = __importDefault(require("prompts"));
-// let room: {
-//     width: number;
-//     height: number;
-// };
+let room;
 // let position: {
 //     x: number;
 //     y: number;
@@ -42,7 +39,8 @@ const prompts_1 = __importDefault(require("prompts"));
 // const walkForward = (): void => {
 // }
 const io = () => __awaiter(void 0, void 0, void 0, function* () {
-    const input = yield prompts_1.default([{
+    const input = yield prompts_1.default([
+        {
             type: 'text',
             name: 'roomSize',
             message: 'Please enter the size of the room in the following format: width height, for example 10 4',
@@ -59,12 +57,20 @@ const io = () => __awaiter(void 0, void 0, void 0, function* () {
                 !isNaN(input.split(' ')[1]) &&
                 typeof input.split(' ')[2] === 'string' &&
                 isNaN(input.split(' ')[2]),
-        }
+        },
     ]);
     return input;
 });
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield io();
-    console.log(input);
+    const roomInput = input.roomSize;
+    const roomSize = roomInput.split(" ");
+    const roomWidth = roomSize[0];
+    const roomHeight = roomSize[1];
+    room = {
+        width: roomWidth,
+        height: roomHeight
+    };
+    console.log(room);
 });
 run();

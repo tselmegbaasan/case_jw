@@ -1,9 +1,9 @@
 import prompts from 'prompts';
 
-// let room: {
-//     width: number;
-//     height: number;
-// };
+let room: {
+  width: number;
+  height: number;
+};
 
 // let position: {
 //     x: number;
@@ -68,7 +68,17 @@ const io = async () => {
 
 const run = async () => {
   const input = await io();
-  console.log(input);
+  const roomInput = input.roomSize;
+  const roomSize = roomInput.split(' ');
+  const roomWidth = roomSize[0];
+  const roomHeight = roomSize[1];
+
+  room = {
+    width: roomWidth,
+    height: roomHeight,
+  };
+
+  console.log(room);
 };
 
 run();
