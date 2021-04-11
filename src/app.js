@@ -66,7 +66,24 @@ const turnRight = () => {
     position = Object.assign(Object.assign({}, position), { direction: newDirection });
 };
 const walkForward = () => {
-    console.log('walking forward');
+    let currentX = position.x;
+    let currentY = position.y;
+    switch (position.direction) {
+        case 'N':
+            currentY < room.height && currentY++;
+            break;
+        case 'E':
+            currentX < room.width && currentX++;
+            break;
+        case 'S':
+            currentY >= 1 && currentY--;
+            break;
+        case 'W':
+            currentX >= 1 && currentX--;
+            break;
+        default: break;
+    }
+    position = Object.assign(Object.assign({}, position), { x: currentX, y: currentY });
 };
 const directionsMapping = {
     L: turnLeft,
@@ -88,6 +105,6 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     setPosition(xPosition, yPosition, direction);
     const directionsInput = input.directions.split('');
     directionsInput.forEach((direction) => directionsMapping[direction]());
-    console.log(room, position);
+    console.log(position);
 });
 run();

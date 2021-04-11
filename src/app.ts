@@ -1,4 +1,3 @@
-import prompts from 'prompts';
 import { io } from './utils';
 
 let room: {
@@ -78,7 +77,30 @@ const turnRight = (): void => {
 };
 
 const walkForward = (): void => {
-  console.log('walking forward');
+  let currentX: number = position.x;
+  let currentY: number = position.y;
+  switch (position.direction) {
+    case 'N':
+      currentY < room.height && currentY++;
+      break;
+    case 'E':
+      currentX < room.width && currentX++;
+      break;
+    case 'S':
+      currentY >= 1 && currentY--;
+      break;
+    case 'W':
+      currentX >= 1 && currentX--;
+      break;
+    default:
+      break;
+  }
+
+  position = {
+    ...position,
+    x: currentX,
+    y: currentY,
+  };
 };
 
 const directionsMapping: { [key: string]: () => void } = {
@@ -108,7 +130,7 @@ const run = async () => {
   const directionsInput: string[] = input.directions.split('');
   directionsInput.forEach((direction) => directionsMapping[direction]());
 
-  console.log(room, position);
+  console.log(position);
 };
 
 run();
