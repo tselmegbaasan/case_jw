@@ -52,7 +52,28 @@ const turnLeft = (): void => {
 };
 
 const turnRight = (): void => {
-  console.log('turning right');
+  let newDirection = '';
+  switch (position.direction) {
+    case 'N':
+      newDirection = 'E';
+      break;
+    case 'E':
+      newDirection = 'S';
+      break;
+    case 'S':
+      newDirection = 'W';
+      break;
+    case 'W':
+      newDirection = 'N';
+      break;
+    default:
+      break;
+  }
+
+  position = {
+    ...position,
+    direction: newDirection,
+  };
 };
 
 const walkForward = (): void => {
