@@ -29,7 +29,24 @@ const setRoom = (width, height) => {
     };
 };
 const turnLeft = () => {
-    console.log('turning left');
+    let newDirection = '';
+    switch (position.direction) {
+        case 'N':
+            newDirection = 'W';
+            break;
+        case 'E':
+            newDirection = 'N';
+            break;
+        case 'S':
+            newDirection = 'E';
+            break;
+        case 'W':
+            newDirection = 'S';
+            break;
+        default: break;
+    }
+    position = Object.assign(Object.assign({}, position), { direction: newDirection });
+    console.log(position);
 };
 const turnRight = () => {
     console.log('turning right');
@@ -74,7 +91,7 @@ const io = () => __awaiter(void 0, void 0, void 0, function* () {
 const directionsMapping = {
     L: turnLeft,
     R: turnRight,
-    F: walkForward
+    F: walkForward,
 };
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const input = yield io();
@@ -90,7 +107,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const direction = positionArgs[2];
     setPosition(xPosition, yPosition, direction);
     const directionsInput = input.directions.split('');
-    directionsInput.forEach(direction => directionsMapping[direction]());
+    directionsInput.forEach((direction) => directionsMapping[direction]());
     console.log(room, position);
 });
 run();

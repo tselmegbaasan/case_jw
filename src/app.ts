@@ -27,7 +27,28 @@ const setRoom = (width: number, height: number): void => {
 };
 
 const turnLeft = (): void => {
-  console.log('turning left');
+  let newDirection = '';
+  switch (position.direction) {
+    case 'N':
+      newDirection = 'W';
+      break;
+    case 'E':
+      newDirection = 'N';
+      break;
+    case 'S':
+      newDirection = 'E';
+      break;
+    case 'W':
+      newDirection = 'S';
+      break;
+    default:
+      break;
+  }
+
+  position = {
+    ...position,
+    direction: newDirection,
+  };
 };
 
 const turnRight = (): void => {
