@@ -9,9 +9,13 @@ export const isAcceptedCharacter = (
 
 export const validateRoomSize = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
-  const roomWidth: string = splitStr[0];
-  const roomHeight: string = splitStr[1];
-  return !isNaN(roomWidth as any) && !isNaN(roomHeight as any);
+  if (splitStr.length === 2) {
+    const roomWidth: string = splitStr[0];
+    const roomHeight: string = splitStr[1];
+    return !isNaN(roomWidth as any) && !isNaN(roomHeight as any);
+  } else {
+    return false;
+  }
 };
 
 export const isUpperCase = (str: string) => {
@@ -20,18 +24,22 @@ export const isUpperCase = (str: string) => {
 
 export const validateCurrentPosition = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
-  const xPositionStr: string = splitStr[0];
-  const yPositionStr: string = splitStr[1];
-  const directionStr: string = splitStr[2];
+  if (splitStr.length === 3) {
+    const xPositionStr: string = splitStr[0];
+    const yPositionStr: string = splitStr[1];
+    const directionStr: string = splitStr[2];
 
-  const acceptedCharacters: string[] = ['N', 'E', 'S', 'W'];
-  return (
-    !isNaN(xPositionStr as any) &&
-    !isNaN(yPositionStr as any) &&
-    isAcceptedCharacter(acceptedCharacters, directionStr) &&
-    isUpperCase(directionStr) &&
-    str !== ''
-  );
+    const acceptedCharacters: string[] = ['N', 'E', 'S', 'W'];
+    return (
+      !isNaN(xPositionStr as any) &&
+      !isNaN(yPositionStr as any) &&
+      isAcceptedCharacter(acceptedCharacters, directionStr) &&
+      isUpperCase(directionStr) &&
+      str !== ''
+    );
+  } else {
+    return false;
+  }
 };
 
 export const validateCommands = (str: string): boolean => {

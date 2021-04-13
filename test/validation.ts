@@ -16,7 +16,7 @@ describe('Validation', () => {
     expect(isUpperCase('Hello')).to.equal(false);
   });
   it('for upper case should return false when all characters are lower case', () => {
-    expect(isUpperCase('Hello')).to.equal(false);
+    expect(isUpperCase('hello')).to.equal(false);
   });
 
   //isAcceptedCharacter()
@@ -33,6 +33,9 @@ describe('Validation', () => {
   it('for room size input should return false if the input is empty', () => {
     expect(validateRoomSize('')).to.equal(false);
   });
+  it('for room size input should return false if the input consists of too many arguments (2)', () => {
+    expect(validateRoomSize('10 4 5')).to.equal(false);
+  });
   it('for room size input should return false if the input is incomplete, i.e lacks one or more argument', () => {
     expect(validateRoomSize('10')).to.equal(false);
   });
@@ -46,6 +49,9 @@ describe('Validation', () => {
   //validateCurrentPosition()
   it('for position input should return false if the input is empty', () => {
     expect(validateCurrentPosition('')).to.equal(false);
+  });
+  it('for position input should return false if the input consists of too many arguments (3)', () => {
+    expect(validateCurrentPosition('5 4 W E')).to.equal(false);
   });
   it('for position input should return false if the input is incomplete, i.e lacks one or more arguments', () => {
     expect(validateCurrentPosition('5 4')).to.equal(false);
