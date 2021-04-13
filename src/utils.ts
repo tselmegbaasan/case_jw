@@ -1,14 +1,18 @@
 import prompts from 'prompts';
 
 const isAcceptedCharacter = (acceptedCharacters: string[], str: string) => {
-  return acceptedCharacters.some((char: string) => str.includes(char));
+  return acceptedCharacters.every((char: string) => str.includes(char));
 };
 
 const validateRoomSize = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
   const roomWidth: string = splitStr[0];
   const roomHeight: string = splitStr[1];
-  return !isNaN(roomWidth as any) && !isNaN(roomHeight as any);
+  return (
+    !isNaN(roomWidth as any) &&
+    !isNaN(roomHeight as any) &&
+    splitStr.length === 2
+  );
 };
 
 const isUpperCase = (str: string) => {
@@ -30,19 +34,19 @@ const validateCurrentPosition = (str: string): boolean => {
   );
 };
 
-const validateDirections = (str: string): boolean => {
+const validateCommands = (str: string): boolean => {
   const acceptedCharacters: string[] = ['R', 'L', 'F'];
 
   return (
     str
       .split('')
-      .some((char: string) => isAcceptedCharacter(acceptedCharacters, char)) &&
+      .every((char: string) => isAcceptedCharacter(acceptedCharacters, char)) &&
     isUpperCase(str)
   );
 };
 
 export const io = async (): Promise<
-  prompts.Answers<'roomSize' | 'currentPosition' | 'directions'>
+  prompts.Answers<'roomSize' | 'currentPosition' | 'commands'>
 > => {
   const input: prompts.Answers<string> = await prompts([
     {
@@ -61,10 +65,10 @@ export const io = async (): Promise<
     },
     {
       type: 'text',
-      name: 'directions',
+      name: 'commands',
       message:
-        'Please enter your directions to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
-      validate: (input: string) => validateDirections(input),
+        'Please enter your commands to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
+      validate: (input: string) => validateCommands(input),
     },
   ]);
   return input;

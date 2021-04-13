@@ -6,7 +6,7 @@ import Position from './position';
 
 async () => {
   const input: prompts.Answers<
-    'roomSize' | 'currentPosition' | 'directions'
+    'roomSize' | 'currentPosition' | 'commands'
   > = await io();
 
   const room = createRoom(input.roomSize);
@@ -14,14 +14,14 @@ async () => {
 
   const robot = new Robot(positon, room);
 
-  const commandoMapping: { [key: string]: () => void } = {
+  const commandMapping: { [key: string]: () => void } = {
     L: robot.turnLeft,
     R: robot.turnRight,
     F: robot.walkForward,
   };
 
-  const directionsInput: string[] = input.directions.split('');
-  directionsInput.forEach((commando) => commandoMapping[commando]());
+  const directionsInput: string[] = input.commands.split('');
+  directionsInput.forEach((command) => commandMapping[command]());
 
   console.log(
     `Report: ${robot.position.x} ${robot.position.y} ${robot.position.direction}`,
