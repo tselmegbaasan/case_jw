@@ -8,11 +8,7 @@ const validateRoomSize = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
   const roomWidth: string = splitStr[0];
   const roomHeight: string = splitStr[1];
-  return (
-    !isNaN(roomWidth as any) &&
-    !isNaN(roomHeight as any) &&
-    splitStr.length === 2
-  );
+  return !isNaN(roomWidth as any) && !isNaN(roomHeight as any);
 };
 
 const isUpperCase = (str: string) => {
@@ -30,7 +26,8 @@ const validateCurrentPosition = (str: string): boolean => {
     !isNaN(xPositionStr as any) &&
     !isNaN(yPositionStr as any) &&
     isAcceptedCharacter(acceptedCharacters, directionStr) &&
-    isUpperCase(directionStr)
+    isUpperCase(directionStr) &&
+    str !== ''
   );
 };
 
@@ -48,32 +45,28 @@ const validateCommands = (str: string): boolean => {
 export const io = async (): Promise<
   prompts.Answers<'roomSize' | 'currentPosition' | 'commands'>
 > => {
-  try {
-    const input: prompts.Answers<string> = await prompts([
-      {
-        type: 'text',
-        name: 'roomSize',
-        message:
-          'Please enter the size of the room in the following format: width height, for example 10 4',
-        validate: (input: string) => validateRoomSize(input),
-      },
-      {
-        type: 'text',
-        name: 'currentPosition',
-        message:
-          'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
-        validate: (input: string) => validateCurrentPosition(input),
-      },
-      {
-        type: 'text',
-        name: 'commands',
-        message:
-          'Please enter your commands to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
-        validate: (input: string) => validateCommands(input),
-      },
-    ]);
-    return input;
-  } catch (error) {
-    console.log(error.message);
-  }
+  const input: prompts.Answers<string> = await prompts([
+    {
+      type: 'text',
+      name: 'roomSize',
+      message:
+        'Please enter the size of the room in the following format: width height, for example 10 4',
+      validate: (input: string) => validateRoomSize(input),
+    },
+    {
+      type: 'text',
+      name: 'currentPosition',
+      message:
+        'Please enter the current position of the robot in the following format: X Y DIRECTION, for example 1 2 N',
+      validate: (input: string) => validateCurrentPosition(input),
+    },
+    {
+      type: 'text',
+      name: 'commands',
+      message:
+        'Please enter your commands to the robot in the following format: RLFFL, where R=right turn, L=left turn and F=walk forward',
+      validate: (input: string) => validateCommands(input),
+    },
+  ]);
+  return input;
 };
