@@ -4,7 +4,7 @@ import Room from '../src/room';
 import Position from '../src/position';
 
 describe('Robot', () => {
-  const room: Room = { width: 5, height: 5 };
+  const room: Room = { width: 3, height: 3 };
   const northExample: Position = { x: 1, y: 1, direction: 'N' };
   const eastExample: Position = { x: 1, y: 1, direction: 'E' };
   const southExample: Position = { x: 1, y: 1, direction: 'S' };
@@ -82,6 +82,42 @@ describe('Robot', () => {
 
   it('should walk forward 1 step in west direction', () => {
     const robot = new Robot(westExample, room);
+    robot.walkForward();
+    expect(robot.position.direction).to.equal('W');
+    expect(robot.position.x).to.equal(0);
+    expect(robot.position.y).to.equal(1);
+  });
+
+  it('should stay still when reaching the rooms northern limits', () => {
+    const robot = new Robot(northExample, room);
+    robot.walkForward();
+    robot.walkForward();
+    expect(robot.position.direction).to.equal('N');
+    expect(robot.position.x).to.equal(1);
+    expect(robot.position.y).to.equal(0);
+  });
+
+  it('should stay still when reaching the rooms southern limits', () => {
+    const robot = new Robot(southExample, room);
+    robot.walkForward();
+    robot.walkForward();
+    expect(robot.position.direction).to.equal('S');
+    expect(robot.position.x).to.equal(1);
+    expect(robot.position.y).to.equal(2);
+  });
+
+  it('should stay still when reaching the rooms eastern limits', () => {
+    const robot = new Robot(eastExample, room);
+    robot.walkForward();
+    robot.walkForward();
+    expect(robot.position.direction).to.equal('E');
+    expect(robot.position.x).to.equal(2);
+    expect(robot.position.y).to.equal(1);
+  });
+
+  it('should stay still when reaching the rooms western limits', () => {
+    const robot = new Robot(westExample, room);
+    robot.walkForward();
     robot.walkForward();
     expect(robot.position.direction).to.equal('W');
     expect(robot.position.x).to.equal(0);

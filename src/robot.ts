@@ -68,10 +68,10 @@ export default class Robot {
         currentY >= 1 && currentY--;
         break;
       case 'E':
-        currentX < this.room.width && currentX++;
+        currentX < this.room.width - 1 && currentX++;
         break;
       case 'S':
-        currentY < this.room.height && currentY++;
+        currentY < this.room.height - 1 && currentY++;
         break;
       case 'W':
         currentX >= 1 && currentX--;
