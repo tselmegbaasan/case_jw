@@ -1,12 +1,14 @@
 import Robot from '../src/robot';
 import { expect } from 'chai';
+import Room from '../src/room';
+import Position from '../src/position';
 
 describe('Robot', () => {
-  const room = { width: 5, height: 5 };
-  const northExample = { x: 1, y: 1, direction: 'N' };
-  const eastExample = { x: 1, y: 1, direction: 'E' };
-  const southExample = { x: 1, y: 1, direction: 'S' };
-  const westExample = { x: 1, y: 1, direction: 'W' };
+  const room: Room = { width: 5, height: 5 };
+  const northExample: Position = { x: 1, y: 1, direction: 'N' };
+  const eastExample: Position = { x: 1, y: 1, direction: 'E' };
+  const southExample: Position = { x: 1, y: 1, direction: 'S' };
+  const westExample: Position = { x: 1, y: 1, direction: 'W' };
 
   //Testing turnRight() and turnLeft()
   it('should have direction east when turning right from north.', () => {
@@ -70,11 +72,19 @@ describe('Robot', () => {
     expect(robot.position.y).to.equal(2);
   });
 
-  // it('should walk forward 1 step in east direction', () => {
-  //     const robot = new Robot(eastExample, room);
-  //     robot.walkForward();
-  //     expect(robot.position.direction).to.equal('E');
-  //     expect(robot.position.x).to.equal(2);
-  //     expect(robot.position.y).to.equal(0);
-  // });
+  it('should walk forward 1 step in east direction', () => {
+    const robot = new Robot(eastExample, room);
+    robot.walkForward();
+    expect(robot.position.direction).to.equal('E');
+    expect(robot.position.x).to.equal(2);
+    expect(robot.position.y).to.equal(1);
+  });
+
+  it('should walk forward 1 step in west direction', () => {
+    const robot = new Robot(westExample, room);
+    robot.walkForward();
+    expect(robot.position.direction).to.equal('W');
+    expect(robot.position.x).to.equal(0);
+    expect(robot.position.y).to.equal(1);
+  });
 });
