@@ -86,4 +86,14 @@ export default class Robot {
       y: currentY,
     };
   };
+
+  commandMapping: { [key: string]: () => void } = {
+    L: this.turnLeft,
+    R: this.turnRight,
+    F: this.walkForward,
+  };
+
+  followCommands = (commands: string[]): void => {
+    commands.forEach((command: string) => this.commandMapping[command]());
+  };
 }

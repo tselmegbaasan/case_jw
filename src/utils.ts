@@ -1,21 +1,24 @@
 import prompts from 'prompts';
 
-const isAcceptedCharacter = (acceptedCharacters: string[], str: string) => {
-  return acceptedCharacters.every((char: string) => str.includes(char));
+export const isAcceptedCharacter = (
+  acceptedCharacters: string[],
+  str: string,
+) => {
+  return acceptedCharacters.some((char: string) => str.includes(char));
 };
 
-const validateRoomSize = (str: string): boolean => {
+export const validateRoomSize = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
   const roomWidth: string = splitStr[0];
   const roomHeight: string = splitStr[1];
   return !isNaN(roomWidth as any) && !isNaN(roomHeight as any);
 };
 
-const isUpperCase = (str: string) => {
+export const isUpperCase = (str: string) => {
   return str.toUpperCase() === str;
 };
 
-const validateCurrentPosition = (str: string): boolean => {
+export const validateCurrentPosition = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
   const xPositionStr: string = splitStr[0];
   const yPositionStr: string = splitStr[1];
@@ -31,7 +34,7 @@ const validateCurrentPosition = (str: string): boolean => {
   );
 };
 
-const validateCommands = (str: string): boolean => {
+export const validateCommands = (str: string): boolean => {
   const acceptedCharacters: string[] = ['R', 'L', 'F'];
 
   return (

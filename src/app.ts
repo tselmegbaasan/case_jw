@@ -14,14 +14,8 @@ async () => {
 
   const robot = new Robot(positon, room);
 
-  const commandMapping: { [key: string]: () => void } = {
-    L: robot.turnLeft,
-    R: robot.turnRight,
-    F: robot.walkForward,
-  };
-
-  const directionsInput: string[] = input.commands.split('');
-  directionsInput.forEach((command) => commandMapping[command]());
+  const commands: string[] = input.commands.split('');
+  robot.followCommands(commands);
 
   console.log(
     `Report: ${robot.position.x} ${robot.position.y} ${robot.position.direction}`,

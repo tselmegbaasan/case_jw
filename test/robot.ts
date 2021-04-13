@@ -123,4 +123,27 @@ describe('Robot', () => {
     expect(robot.position.x).to.equal(0);
     expect(robot.position.y).to.equal(1);
   });
+
+  //testing followCommands()
+  it('should end up at position 1 3 N when the commands are RFRFFRFRF and the starting position is 1 2 N in a 5 5 room.', () => {
+    const testRoom: Room = { width: 5, height: 5 };
+    const testPosition: Position = { x: 1, y: 2, direction: 'N' };
+    const robot = new Robot(testPosition, testRoom);
+    const commands = 'RFRFFRFRF'.split('');
+    robot.followCommands(commands);
+    expect(robot.position.direction).to.equal('N');
+    expect(robot.position.x).to.equal(1);
+    expect(robot.position.y).to.equal(3);
+  });
+
+  it('should end up at position 3 1 E when the commands are RFLFFLRF and the starting position is 0 0 E in a 5 5 room.', () => {
+    const testRoom: Room = { width: 5, height: 5 };
+    const testPosition: Position = { x: 0, y: 0, direction: 'E' };
+    const robot = new Robot(testPosition, testRoom);
+    const commands = 'RFLFFLRF'.split('');
+    robot.followCommands(commands);
+    expect(robot.position.direction).to.equal('E');
+    expect(robot.position.x).to.equal(3);
+    expect(robot.position.y).to.equal(1);
+  });
 });
