@@ -2,9 +2,9 @@
   "name": "jaywaycase",
   "version": "1.0.0",
   "description": "Case for job at Jayway (robot controller)",
-  "main": "src/js/app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "tsc && node src/js/app.js",
+    "start": "ts-node src/app.ts",
     "test": "nyc mocha --require ts-node/register --watch-extensions ts 'test/**/*.ts'"
   },
   "repository": {

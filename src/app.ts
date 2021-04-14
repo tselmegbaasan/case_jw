@@ -4,7 +4,7 @@ import Room from './room';
 import Robot from './robot';
 import Position from './position';
 
-async () => {
+const run = async () => {
   const input: prompts.Answers<
     'roomSize' | 'currentPosition' | 'commands'
   > = await io();
@@ -40,3 +40,5 @@ const createPosition = (str: string): Position => {
     direction: positionArgs[2],
   };
 };
+
+run();

@@ -24,24 +24,21 @@ export const isUpperCase = (str: string) => {
 
 export const validateCurrentPosition = (str: string): boolean => {
   const splitStr: string[] = str.split(' ');
-  if (splitStr.length >= 3) {
-    const xPositionStr: string = splitStr[0];
-    const yPositionStr: string = splitStr[1];
-    const directionStr: string = splitStr[2];
+  if (splitStr.length !== 3) return false;
 
-    const acceptedCharacters: string[] = ['N', 'E', 'S', 'W'];
+  const xPositionStr: string = splitStr[0];
+  const yPositionStr: string = splitStr[1];
+  const directionStr: string = splitStr[2];
 
-    return (
-      directionStr &&
-      !isNaN(xPositionStr as any) &&
-      !isNaN(yPositionStr as any) &&
-      isAcceptedCharacter(acceptedCharacters, directionStr) &&
-      isUpperCase(directionStr) &&
-      str !== ''
-    );
-  } else {
-    return false;
-  }
+  const acceptedCharacters: string[] = ['N', 'E', 'S', 'W'];
+
+  return (
+    !isNaN(xPositionStr as any) &&
+    !isNaN(yPositionStr as any) &&
+    isAcceptedCharacter(acceptedCharacters, directionStr) &&
+    isUpperCase(directionStr) &&
+    str !== ''
+  );
 };
 
 export const validateCommands = (str: string): boolean => {
