@@ -1,6 +1,6 @@
 ## Robot controller 
 
-This is my solution for the robot controller case at Jayway. 
+This is my solution for the robot controller case.
 
 1. Install dependencies (npm install) 
 2. Test the application (npm test) 
