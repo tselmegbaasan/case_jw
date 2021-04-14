@@ -1,4 +1,3 @@
-# Jayway case 
 ## Robot controller 
 
 This is my solution for the robot controller case at Jayway. 
